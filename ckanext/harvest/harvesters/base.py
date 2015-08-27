@@ -19,6 +19,8 @@ from ckanext.harvest.model import HarvestJob, HarvestObject, HarvestGatherError,
                                     HarvestObjectError
 
 from ckan.plugins.core import SingletonPlugin, implements
+from ckan.plugins.toolkit import get_converter
+
 from ckanext.harvest.interfaces import IHarvester
 
 
@@ -171,6 +173,7 @@ class HarvesterBase(SingletonPlugin):
             schema = default_create_package_schema()
             schema['id'] = [ignore_missing, unicode]
             schema['__junk'] = [ignore]
+            schema['resources']['field_names'] = [ignore_missing, unicode]
 
             # Check API version
             if self.config:

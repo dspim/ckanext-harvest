@@ -46,7 +46,7 @@ class DSPCKANHarvester(HarvesterBase):
             http_response = urllib2.urlopen(http_request)
         except urllib2.URLError, e:
             raise ContentFetchError(
-                'Could not fetch url: %s, error: %s' % 
+                'Could not fetch url: %s, error: %s' %
                 (url, str(e))
             )
         return http_response.read()
@@ -83,8 +83,8 @@ class DSPCKANHarvester(HarvesterBase):
     def info(self):
         return {
             'name': 'dspckan',
-            'title': 'DSP CKAN',
-            'description': 'Harvests remote CKAN instances',
+            'title': 'CKAN (enhanced)',
+            'description': 'Harvests remote CKAN instances with the field names of resources',
             'form_config_interface':'Text'
         }
 
@@ -402,10 +402,43 @@ class DSPCKANHarvester(HarvesterBase):
 
                         package_dict['extras'][key] = value
 
-            # Clear remote url_type for resources (eg datastore, upload) as we
-            # are only creating normal resources with links to the remote ones
+            # Additional Info
+            # package_dict['extras']['field_names'] = ''
+
+            # 1. Clear remote url_type for resources (eg datastore, upload) as we
+            #    are only creating normal resources with links to the remote ones
+            # 2. Fetch the field names of resources
+
             for resource in package_dict.get('resources', []):
                 resource.pop('url_type', None)
+
+                id = resource['id']
+
+                # Get resource URL
+                url = harvest_object.source.url.rstrip('/')
+
+                # Get resource content
+                url = url + self._get_action_api_offset() + '/datastore_search?resource_id=' +\
+                      id + '&limit=1'
+
+                try:
+                    res = urllib2.urlopen(url=url)
+                    fields = json.loads(res.read())['result']['fields']
+                    fields = [i['id'] for i in fields]
+
+                    if fields:
+                        field_names = ', '.join(fields)
+                    else:
+                        field_names = ''
+
+                    resource['field_names'] = field_names
+
+                except Exception as e:
+                    print e
+
+                #print url
+
+            #print package_dict
 
             result = self._create_or_update_package(package_dict,harvest_object)
 
