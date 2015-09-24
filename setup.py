@@ -35,6 +35,7 @@ setup(
 	harvest=ckanext.harvest.plugin:Harvest
 	ckan_harvester=ckanext.harvest.harvesters:CKANHarvester
 	dsp_ckan_harvester=ckanext.harvest.harvesters:DSPCKANHarvester
+	tp_ckan_harvester=ckanext.harvest.harvesters:TaipeiHarvester
     [ckan.test_plugins]
 	test_harvester=ckanext.harvest.tests.test_queue:TestHarvester
 	test_action_harvester=ckanext.harvest.tests.test_action:MockHarvesterForActionTests

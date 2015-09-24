@@ -34,6 +34,9 @@ class Harvest(p.SingletonPlugin, DefaultDatasetForm):
 
     startup = False
 
+
+    ##
+
     ## IPackageController
 
     def after_create(self, context, data_dict):
@@ -215,6 +218,9 @@ class Harvest(p.SingletonPlugin, DefaultDatasetForm):
         org_controller = 'ckanext.harvest.controllers.organization:OrganizationController'
         map.connect('{0}_org_list'.format(DATASET_TYPE_NAME), '/organization/' + DATASET_TYPE_NAME + '/' + '{id}', controller=org_controller, action='source_list')
 
+        # dsp_admin_controller = 'ckanext.harvest.controllers.dspadmin:DSPAdminController'
+        # map.connect('dsp-harvest-admin', '/ckan-admin/sync',controller=dsp_admin_controller, action='config')
+
         return map
 
     def update_config(self, config):
@@ -227,6 +233,7 @@ class Harvest(p.SingletonPlugin, DefaultDatasetForm):
         p.toolkit.add_public_directory(config, 'public')
         p.toolkit.add_resource('fanstatic_library', 'ckanext-harvest')
         p.toolkit.add_resource('public/ckanext/harvest/javascript', 'harvest-extra-field')
+        # p.toolkit.add_ckan_admin_tab(config, 'dsp-harvest-admin', 'Sync')
 
     ## IActions
 
