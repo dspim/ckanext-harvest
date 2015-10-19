@@ -1,15 +1,10 @@
 from setuptools import setup, find_packages
 from codecs import open  # To use a consistent encoding
-
-import sys, os
-
 from os import path
 
 here = path.abspath(path.dirname(__file__))
 
-version = '0.2.5'
-
-here = path.abspath(path.dirname(__file__))
+version = '0.3.1'
 
 # Get the long description from the relevant file
 with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
@@ -27,7 +22,7 @@ setup(
 	url='https://dsp.im',
 	license='MIT',
 	packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
-	namespace_packages=['ckanext', 'ckanext.harvest'],
+	# namespace_packages=['ckanext', 'ckanext.harvest'],
 	include_package_data=True,
 	zip_safe=False,
 	install_requires=[
@@ -55,11 +50,11 @@ setup(
     [babel.extractors]
     ckan = ckan.lib.extract:extract_ckan
 	""",
-        message_extractors={
-            'ckanext': [
-                ('**.py', 'python', None),
-                ('**.js', 'javascript', None),
-                ('**/templates_new/**.html', 'ckan', None),
-            ],
-        }
+    message_extractors={
+        'ckanext': [
+            ('**.py', 'python', None),
+            ('**.js', 'javascript', None),
+            ('**/templates_new/**.html', 'ckan', None),
+        ],
+    }
 )
