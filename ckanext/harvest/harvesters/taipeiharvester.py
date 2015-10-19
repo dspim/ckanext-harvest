@@ -12,7 +12,7 @@ log = logging.getLogger(__name__)
 
 class TaipeiHarvester(HarvesterBase):
 
-    url = 'http://data.taipei/opendata/datalist/apiAccess?scope=datasetMetadataSearch'
+    url = 'http://data.taipei/opendata/datalist/apiAccess?scope=datasetMetadataSearch&q=type:dataset'
     def _get_content(self, url):
         http_request = urllib2.Request(
             url = url,
@@ -66,17 +66,18 @@ class TaipeiHarvester(HarvesterBase):
             package_dict = {
                     'id':harvest_object.guid,
                     'owner_org':'taipei',
-                    'name': content['id'],
+                    'name': "taipei-" + content['id'],
                     'title': content['title'],
                     'url': 'http://data.taipei/opendata/datalist/datasetMeta?oid='+content['id'],
                     'notes': content.get('description'),
                     'license_id': u'臺北市政府資訊開放加值應用規範',
-                    'resources': []
+                    'resources': [],
+                    # 'tags': content.get('tag').split(',') if content.get('tag') else []
             }
             resources = content['resources']
             for resource in resources:
                 package_dict['resources'].append({
-                    'name':content['title'],
+                    'name':resource['resourceName'],
                     'url':'http://data.taipei/opendata/datalist/datasetMeta/download?id='+content['id']+'&rid='+resource['resourceId'],
                     'format':resource['format'],
                     'description':resource['resourceDescription']
