@@ -1,20 +1,25 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.2'
+version = '0.2.1'
+
+here = path.abspath(path.dirname(__file__))
+
+# Get the long description from the relevant file
+with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+    long_description = f.read()
 
 setup(
-	name='ckanext-harvest',
+	name='ckanext-harvest-zh',
 	version=version,
-	description="Harvesting interface plugin for CKAN",
-	long_description="""\
-	""",
+	description="An improved harvest package to collect Chinese language data sets for CKAN. ",
+	long_description=long_description,
+
 	classifiers=[], # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
-	keywords='',
-	author='CKAN',
-	author_email='ckan@okfn.org',
-	url='http://ckan.org/wiki/Extensions',
-	license='mit',
+	keywords='ckan, Linked-data, harvest',
+	author='CKAN, Bing-Si Ni, Bo-Han Wu',
+	url='https://dsp.im',
+	license='MIT',
 	packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
 	namespace_packages=['ckanext', 'ckanext.harvest'],
 	include_package_data=True,
