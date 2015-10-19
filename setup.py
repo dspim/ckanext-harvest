@@ -1,7 +1,13 @@
 from setuptools import setup, find_packages
+from codecs import open  # To use a consistent encoding
+
 import sys, os
 
-version = '0.2.1'
+from os import path
+
+here = path.abspath(path.dirname(__file__))
+
+version = '0.2.5'
 
 here = path.abspath(path.dirname(__file__))
 
@@ -10,7 +16,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-	name='ckanext-harvest-zh',
+	name='ckanext-harvest_zh',
 	version=version,
 	description="An improved harvest package to collect Chinese language data sets for CKAN. ",
 	long_description=long_description,
